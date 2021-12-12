@@ -1,0 +1,4 @@
+cd C:\Users\Acer\Desktop\djanko
+.\venv\scripts\activate
+cd C:\Users\Acer\Desktop\djanko\mywebsite
+python manage.py runserver
