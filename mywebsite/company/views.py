@@ -1,9 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import *
-from songline import Sendline
+from songline import Sendline #ส่งไลน์
+from .emailsystem import sendthai #ส่งเมล
+from django.contrib.auth import authenticate,login
+def Login(request):
+    context = {}#สิ่งที่จะใส่เข้าไป
 
+    if request.method == 'POST': #if กดปุ่มเข้ามา
+        data = request.POST.copy()
+        username = data.get('username')
+        password = data.get('password')
 
+        try:
+            user = authenticate(username=username, password=password)
+            login(request,user)  
+        except:    
+            context['massage'] = 'username or password not correct please try again'
+    return render(request, 'company/login.html',context)
 # def Home(request):
 #     return HttpResponse('<h1>Hello World!<h1> <br> <p>by Kaewmanee</p>')
 
@@ -42,7 +56,11 @@ def ContactUs(request):
         newrecord.detail = detail
         newrecord.save()
         context['massage'] = "ข้อความได้ส่งไปเรียบร้อยแล้วกรุณารอการตอบกลับภายใน 24 ชั่วโมง"
-        token = 'WuJJobc3Xr0vdnrULjqY4UTvI1BxNrspbKUgpmLUaBL'
+        token = 'XLsgUQxFATU9TTHADBlxgAXUMX2SZU92QcYcQ4ayBis'
+
+        #แจ้งemail กลับ
+        text =  'สวัสดีคุณลูกค้าที่เคารพ\n\nทางรับได้รับemailเรียบร้อยแล้วเราจะตอบกลับท่านให้เร็วที่สุด\n\nท่านสามารถติดต่อทางช่องทางอื่นได้อีก :\n\nLineID : 0813064437\n\nfacebook : w.computer'
+        sendthai(email,'W.computer :สอบถามปัญหา',text)
 
             # token สามารถสมัคร+ยกเลิกได้ผ่านทาง line notify
 
@@ -54,20 +72,10 @@ def ContactUs(request):
 
     return render(request, 'company/contact.html',context)
 
-from django.contrib.auth import authenticate,login
-def Login(request):
-    context = {}#สิ่งที่จะใส่เข้าไป
+def Accountant(request):
+    contact = ContactList.objects.all() # ดึง ContactListมาใช้
+    context = {'contact':contact}
+    return render(request, 'company/accountant.html',context)
 
-    if request.method == 'POST': #if กดปุ่มเข้ามา
-        data = request.POST.copy()
-        username = data.get('username')
-        password = data.get('password')
-
-        try:
-            user = authenticate(username=username, password=password)
-            login(request,user)  
-        except:    
-            context['massage'] = 'username or password not correct please try again'
-    return render(request, 'company/login.html',context)
 
 

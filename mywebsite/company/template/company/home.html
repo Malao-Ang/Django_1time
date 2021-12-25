@@ -4,8 +4,19 @@
 {%block content %}
 
 <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-  <h1 class="display-4 fw-normal">โปรโมชั่นพิเศษ</h1>
-  <p class="fs-5 text-muted"> โปรโมชั่นพิเศษ สำหรับผู้ซื้อไอโพน ในวันที่ 31 กุมพาพันธ์</p>
+  {% if user.profile.usertype == 'vip' %}
+    <h1 class="display-4 fw-normal">โปรโมชั่นพิเศษ สำหรับ VIP </h1>
+    <p class="fs-5 text-muted"> โปรโมชั่นพิเศษ สำหรับผู้ซื้อไอโพน ในวันที่ 31 กุมพาพันธ์ 20%</p>
+  {% elif user.profile.usertype == 'member'%}
+    <h1 class="display-4 fw-normal">โปรโมชั่นพิเศษ สำหรับ member เท่านั้น</h1>
+    <p class="fs-5 text-muted"> โปรโมชั่นพิเศษ สำหรับผู้ซื้อไอโพน ในวันที่ 31 กุมพาพันธ์ 15%</p>
+  {% elif user.profile.usertype == 'vvip'%}
+    <h1 class="display-4 fw-normal">โปรโมชั่นพิเศษ สำหรับ VVIP เท่านั้น</h1>
+    <p class="fs-5 text-muted"> โปรโมชั่นพิเศษ สำหรับผู้ซื้อไอโพน ในวันที่ 31 กุมพาพันธ์ 50%</p>
+  {% else %}
+    <h1 class="display-4 fw-normal">โปรโมชั่นพิเศษ</h1>
+    <p class="fs-5 text-muted"> โปรโมชั่นพิเศษ สำหรับผู้ซื้อไอโพน ในวันที่ 31 กุมพาพันธ์ 10%</p>
+  {% endif %}
 </div>
 <div class="d-flex flex-column justify-content-center"> <!--กัสแก้ให้-->
   <img src="{% static 'image/iphone.png' %}" alt ="My image">
