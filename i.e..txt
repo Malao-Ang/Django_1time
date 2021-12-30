@@ -1,0 +1,4 @@
+- ต้องการให้มดารส่ง sms พิมพ์ bulk sms spi
+- ของต่างประเทศ twilio ส่ง sms ฟรี(จำกัด)
+ 	rพืมพ์ใน python ดู
+	เปิด youtube ดู

@@ -5,4 +5,5 @@ urlpatterns = [
     path('about/', Aboutus,name = 'about-page'), #www.W.cpmputer.com/about/
     path('contact/', ContactUs,name = 'contact-page'), #www.W.cpmputer.com/contact
     path('accountant/',Accountant,name = 'accountant-page'), #www.W.computer/accuntat
+    path('register/', Register,name = 'register-page'), #www.W.computer/register
 ]

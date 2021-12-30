@@ -4,6 +4,7 @@ from .models import *
 from songline import Sendline #ส่งไลน์
 from .emailsystem import sendthai #ส่งเมล
 from django.contrib.auth import authenticate,login
+from django.contrib.auth.models import User
 def Login(request):
     context = {}#สิ่งที่จะใส่เข้าไป
 
@@ -77,5 +78,52 @@ def Accountant(request):
     context = {'contact':contact}
     return render(request, 'company/accountant.html',context)
 
+def Register(request):
+    context = {}#สิ่งที่จะใส่เข้าไป
+
+    if request.method == 'POST': #if กดปุ่มเข้ามา
+
+        data = request.POST.copy()
+        username = data.get('username')
+        mobile = data.get('mobile')
+        email = data.get('email')
+        password = data.get('password')
+        password2 = data.get('password2')
+
+        
+
+        try :
+            check = User.objects.get(username = usermane )
+            context['warning'] ='This email ({}) has already been used.'.format(username)
+            return render(request, 'company/register.html',context)
+
+        except:
+            if password != password2:
+                context['warning'] ='Password not Correct please try again.'
+                return render(request, 'company/register.html',context)
+                #ปกติ redirec เป็น javascrip (version ezy)
+
+            newuser = User()
+            newuser.username = username
+            # newuser.first_name = fullname
+            newuser.email = email
+            newuser.set_password(password)
+            newuser.save()
+
+            newprofile = Profile()
+            newprofile.user = User.objects.get(username = username)
+            newprofile.mobile = mobile
+            newprofile.save()
+            
+
+
+        try:
+            user = authenticate(username=username, password=password)
+            login(request,user)  
+        except:    
+            context['massage'] = 'username or password not correct please try again'
+    return render(request, 'company/register.html',context)
+# def Home(request):
+#     return HttpResponse('<h1>Hello World!<h1> <br> <p>by Kaewmanee</p>')
 
 

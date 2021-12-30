@@ -78,8 +78,8 @@
         {%  endif %}
         
         {% if user.is_authenticated %}
-          &nbsp;&nbsp;<a class="py-2 text-dark text-decoration-none " href="#">| สวัสดีคุณ {{user.first_name}} 
-            {{user.last_name}} ({{user.profile.usertype}})</a>
+          &nbsp;&nbsp;<a class="py-2 text-dark text-decoration-none " href="#">| สวัสดีคุณ {{user.username}} 
+            ({{user.profile.usertype}})</a>
           &nbsp;&nbsp;<a class="py-2 text-dark text-decoration-none btn btn-danger" href="{% url 'logout' %}">Logout</a>
         {% else %}
           &nbsp;&nbsp;<a class="py-2 text-dark text-decoration-none btn btn-primary" href="{% url 'login' %}">Login</a>
@@ -87,7 +87,7 @@
       </nav>
     </div>
 
-   
+
   </header>
 
   <main>
