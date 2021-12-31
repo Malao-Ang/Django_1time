@@ -84,17 +84,17 @@ def Register(request):
     if request.method == 'POST': #if กดปุ่มเข้ามา
 
         data = request.POST.copy()
-        username = data.get('username')
-        mobile = data.get('mobile')
+        fullname = data.get('fullname')
         email = data.get('email')
+        mobile = data.get('mobile')
         password = data.get('password')
         password2 = data.get('password2')
 
-        
+        username = email
 
         try :
-            check = User.objects.get(username = usermane )
-            context['warning'] ='This email ({}) has already been used.'.format(username)
+            check = User.objects.get(username = username )
+            context['warning'] =f'This email ({ username }) has already been used.'
             return render(request, 'company/register.html',context)
 
         except:
@@ -105,7 +105,7 @@ def Register(request):
 
             newuser = User()
             newuser.username = username
-            # newuser.first_name = fullname
+            newuser.first_name = fullname
             newuser.email = email
             newuser.set_password(password)
             newuser.save()
@@ -118,7 +118,7 @@ def Register(request):
 
 
         try:
-            user = authenticate(username=username, password=password)
+            user = authenticate(username = username, password=password)
             login(request,user)  
         except:    
             context['massage'] = 'username or password not correct please try again'
