@@ -42,3 +42,9 @@ class ContactList(models.Model):
 
     def __str__(self):
         return self.title
+
+class ResetPasswordToken(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=100)
+    def __str__(self):
+        return self.user.username

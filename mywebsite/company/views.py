@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import *
 from songline import Sendline #ส่งไลน์
 from .emailsystem import sendthai #ส่งเมล
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+import uuid
 def Login(request):
     context = {}#สิ่งที่จะใส่เข้าไป
 
@@ -16,6 +18,7 @@ def Login(request):
         try:
             user = authenticate(username=username, password=password)
             login(request,user)  
+            return redirect('home-page')
         except:    
             context['massage'] = 'username or password not correct please try again'
     return render(request, 'company/login.html',context)
@@ -73,7 +76,11 @@ def ContactUs(request):
 
     return render(request, 'company/contact.html',context)
 
+@login_required
 def Accountant(request):
+    allow_user = ['accountant','admin']
+    if request.user.profile.usertype not in allow_user: 
+        return redirect('home-page')
     contact = ContactList.objects.all() # ดึง ContactListมาใช้
     context = {'contact':contact}
     return render(request, 'company/accountant.html',context)
@@ -123,7 +130,33 @@ def Register(request):
         except:    
             context['massage'] = 'username or password not correct please try again'
     return render(request, 'company/register.html',context)
-# def Home(request):
-#     return HttpResponse('<h1>Hello World!<h1> <br> <p>by Kaewmanee</p>')
 
+@login_required
+def ProfilePage(request):
+    context = {}
+    profileuser = Profile.objects.get(user = request.user)
+    context['profile'] = profileuser
+    return render(request, 'company/profile.html',context)
+
+
+def ResetPassword(request):
+    context = {}#สิ่งที่จะใส่เข้าไป
+
+    if request.method == 'POST': #if กดปุ่มเข้ามา
+        data = request.POST.copy()
+        username = data.get('email')
+
+        try:
+            user = User.objects.get(username = username )
+            u = uuid.uuid1()
+            token = str(u)
+            newreset = ResetPasswordToken()
+            newreset.user = user
+            newreset.token = token
+            newreset.save()
+            # sendthai(username,'reset password link (W.computer)','กรุณากดจาก link นี้ เพื่อ reset password')
+            return redirect('home-page')
+        except:    
+            context['massage'] = 'email ของคุณไม่มีในระบบ กรุณาตรวจสอบอีกครั้ง'
+    return render(request, 'company/resetpassword.html',context)
 

@@ -1,0 +1,83 @@
+{% extends 'company/base.html'%}
+{% block title %} profile {% endblock title %}
+{%block content %}
+
+<center>
+    <h1>My profile</h1>
+</center>
+
+        {% if warning %}
+            <div>
+                {{warning}}
+            </div>
+        {% endif %}
+        {% if message %}
+            <center>
+                <h3>{{massage}}</h3>
+            </center>
+        {% else %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <h3>POINT : {{profile.point}}</h3>
+
+            <div class="form-group">
+                <label for="fullname">Name</label>
+                <input type="text" class="form-control" id="fullname" name="fullname" value = "{{request.user.username}}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Phone number</label>
+                <input type="text" class="form-control" id="mobile" name="mobile" value="{{profile.mobile}}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" value = "{{profile.user.email}}" required>
+            </div><br>
+
+            <div class="form-check form-group">
+                <label>ประเภทสินค้าและบริการที่คุณสนใจ</label><br>
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    ซ่อม laptop และ PC
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                laptop มือ 2
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    อัพเกรด laptop และ pc
+                </label>
+            </div>
+
+            <hr>
+
+            คุณต้องการรับข้อมูลข่าวสารหรือไม่?
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    ต้องการ
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                    ไม่ต้องการ
+                </label>
+            </div>
+
+                <center>
+                <button type="submit" class="btn btn-primary">Edit Profile</button>
+                </center>
+            </form>
+        {% endif %}
+
+
+{% endblock content %}

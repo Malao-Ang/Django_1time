@@ -18,9 +18,11 @@ from django.urls import path,include # include คือคำสั่งไว
 
 from django.contrib.auth import views
 
+from company.views import Login
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('company.urls')),#link ไปยังapp
-    path('login/',views.LoginView.as_view(template_name='company/login.html'), name = 'login'),
+    # path('login/',views.LoginView.as_view(template_name='company/login.html'), name = 'login'),
+    path('login/',Login ,name = 'login'),
     path('logout/',views.LogoutView.as_view(template_name='company/logout.html'), name = 'logout'),
 ]
