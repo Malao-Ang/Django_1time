@@ -3,8 +3,15 @@
 {%block content %}
 
 <center>
-    <h1>My profile</h1>
+    <h1>My profile</h1>   
 </center>
+    {% if user.profile.verified == False %}
+            <p>
+                <div class="alert alert-warning" role="alert">
+                    &nbsp;&nbsp;กรุณายืนยันตัวตนใน email 
+            </div>
+            </p>
+            {% endif  %}
 
         {% if warning %}
             <div>

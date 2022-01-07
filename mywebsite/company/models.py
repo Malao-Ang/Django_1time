@@ -6,6 +6,8 @@ class Profile(models.Model):
     usertype = models.CharField(max_length=100,default='member')
     point = models.IntegerField(default=0)
     mobile = models.CharField(max_length=20,null=True,blank=True)
+    verified = models.BooleanField(default=False)
+    verify_token = models.CharField(max_length = 50,default = 'No token')
 
     def __str__(self):
         return self.user.username
@@ -46,5 +48,5 @@ class ContactList(models.Model):
 class ResetPasswordToken(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=100)
-    def __str__(self):
+    def __int__(self):
         return self.user.username

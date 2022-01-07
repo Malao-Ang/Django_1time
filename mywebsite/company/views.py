@@ -103,6 +103,7 @@ def Register(request):
             check = User.objects.get(username = username )
             context['warning'] =f'This email ({ username }) has already been used.'
             return render(request, 'company/register.html',context)
+            return redirect('home-page')
 
         except:
             if password != password2:
@@ -117,10 +118,19 @@ def Register(request):
             newuser.set_password(password)
             newuser.save()
 
+            u = uuid.uuid1()
+            token = str(u) #random uuid
+
+
             newprofile = Profile()
             newprofile.user = User.objects.get(username = username)
             newprofile.mobile = mobile
+            newprofile.verify_token = token
             newprofile.save()
+            text = 'กรุณากดจาก link เพื่อยืนยันการเป็นสามาชิก\n\n link : http://localhost:8000/verify-email/'+token
+            sendthai(username,'Verify email (W.computer)',text)
+            # context['messages'] = 'ระบบได้ส่ง email ให้คุณไปแล้วกรุณาตรวจสอบ email ล่าสุดของคุณ'
+            return redirect('profile-page')
             
 
 
@@ -130,6 +140,21 @@ def Register(request):
         except:    
             context['massage'] = 'username or password not correct please try again'
     return render(request, 'company/register.html',context)
+
+def Verify_Success(request,token):
+    context = {}
+    try:
+        check = Profile.objects.get(verify_token=token)
+    # if check == Profile.objects.get(verify_token=token):
+        check.verified = True
+        check.save()
+        check.point = 100
+        return redirect('profile-page')
+
+    except:
+        context['error'] = "Link doesn't have correct ,Plase check Link in email again."
+        print('end')
+    return render(request, 'company/verifyemail.html',context)
 
 @login_required
 def ProfilePage(request):
@@ -149,14 +174,47 @@ def ResetPassword(request):
         try:
             user = User.objects.get(username = username )
             u = uuid.uuid1()
-            token = str(u)
+            token = str(u) #random uuid
             newreset = ResetPasswordToken()
             newreset.user = user
             newreset.token = token
             newreset.save()
-            # sendthai(username,'reset password link (W.computer)','กรุณากดจาก link นี้ เพื่อ reset password')
-            return redirect('home-page')
-        except:    
+            text = 'กรุณากดจาก link เพื่อ reset\n\n link : http://localhost:8000/reset-new-password/'+token
+            sendthai(username,'reset password link (W.computer)',text)
+            context['messages'] = 'ระบบได้ส่ง email ให้คุณไปแล้วกรุณาตรวจสอบ email ล่าสุดของคุณ'
+
+        except:  
+            print('ลงมานี้')  
             context['massage'] = 'email ของคุณไม่มีในระบบ กรุณาตรวจสอบอีกครั้ง'
     return render(request, 'company/resetpassword.html',context)
 
+def ResetNewPassword(request,token):
+    context = {}
+    print('token = ',token)
+    check = ResetPasswordToken.objects.get(token=token)
+    if check == ResetPasswordToken.objects.get(token=token):
+        if request.method == 'POST': #if กดปุ่มเข้ามา
+            data = request.POST.copy()
+            password1 = data.get('resetpassword1')
+            password2 = data.get('resetpassword2')
+            if password1 == password2 :
+                print('Same')
+                user =check.user
+                user.set_password(password1)
+                user.save()
+                user = authenticate(username = user.username, password=password1)
+                login(request,user)
+                return redirect('home-page')
+            else:
+                context['error'] = 'รหัสผ่านของคุณไม่ถูกต้อง กรุณาลองใหม่'
+    else:
+        context['error'] = "Your request code doesn't exist in the system, please check."
+
+    return render(request, 'company/resetnewpassword.html',context)
+    # try:
+    #     check = ResetPasswordToken.objects.get(token=token)
+    #     print('OK')
+    # except:
+    #         context['error'] = "Your request code doesn't exist in the system, please check."
+
+    

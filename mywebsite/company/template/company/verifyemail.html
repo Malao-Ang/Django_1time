@@ -1,0 +1,25 @@
+    {% extends 'company/base.html'%}
+    {% block title %} Verify Profile {% endblock title %}
+    {%block content %}
+
+    <center>
+        <h1>Verify Profile Complete</h1>
+    </center>
+    {% if massage %}
+        <center>
+        <h3>{{massage}}</h3>
+        </center>
+
+    {% elif error %}
+        <center>
+        <h3>{{error}}</h3>
+        </center>
+
+    {% else  %}
+        <center>
+
+                <h3>Welcome to W.computer</h3>
+        </center>
+    {% endif %}
+
+    {% endblock content %}

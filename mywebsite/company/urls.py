@@ -8,4 +8,6 @@ urlpatterns = [
     path('register/', Register,name = 'register-page'), #www.W.computer/register
     path('profile/', ProfilePage,name = 'profile-page'), #www.W.computer/profile
     path('reset-password/', ResetPassword,name = 'reset-password'), #www.W.computer/resetpassword
+    path('reset-new-password/<str:token>/', ResetNewPassword,name = 'reset-new-password'), #www.W.computer/reset-new-password
+    path('verify-email/<str:token>/', Verify_Success,name = 'verify-email'), #www.W.computer/verify-email
 ]
