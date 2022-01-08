@@ -68,7 +68,8 @@
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         {% if user.profile.usertype == "accountant"%}
-          <a class = "py-2 text-dark text-decoration-none" href="{% url 'accountant-page' %}">รายชื่อติดต่อ </a>
+          <a class = "me-3 py-2 text-dark text-decoration-none" href="{% url 'accountant-page' %}">รายชื่อติดต่อ </a>
+          <a class = "me-3 py-2 text-dark text-decoration-none" href="{% url 'add-product' %}">เพิ่มสินค้า </a>
 
         {% else %}
           <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'about-page' %}">เกี่ยวกับเรา &#128587;</a>
@@ -126,10 +127,10 @@
       <div class="col-6 col-md">
         <h5>About</h5>
         <ul class="list-unstyled text-small">
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="{% url 'my-team' %}">Team</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
           <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
           <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="{% url 'my-team' %}">Terms</a></li>
         </ul>
       </div>
     </div>

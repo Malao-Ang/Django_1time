@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 import uuid
+from django.core.files.storage import FileSystemStorage
 def Login(request):
     context = {}#สิ่งที่จะใส่เข้าไป
 
@@ -283,5 +284,37 @@ def AddProduct(request):
         print(price)
         print(quantity)
         print(instock)
+        print("File : ",request.FILES)
+
+        new = Product()
+        new.title = title
+        new.description = description
+        new.price = float(price)
+        new.quantity = int(quantity)
+
+        if instock=='instock':
+            new.instock = True
+        
+        if 'picture' in request.FILES:
+            file_image = request.FILES['picture']
+            file_image_name = file_image.name.replace(' ','')
+            # from django.core.files.storage import FileSystemStorage
+            fs = FileSystemStorage(location='media/product')
+            filename = fs.save(file_image_name, file_image)
+            upload_file_url = fs.url(filename)
+            print('Picture URL:',upload_file_url)
+            new.picture = '/product' + upload_file_url[6:]
+
+        if 'specfile' in request.FILES:
+            file_image = request.FILES['specfile']
+            file_image_name = file_image.name.replace(' ','')
+            # from django.core.files.storage import FileSystemStorage
+            fs = FileSystemStorage(location='media/specfile')
+            filename = fs.save(file_image_name, file_image)
+            upload_file_url = fs.url(filename)
+            print('Picture URL:',upload_file_url)
+            new.specfile = '/specfile' + upload_file_url[6:]
+
+        new.save()
 
     return render(request, 'company/addproduct.html')
