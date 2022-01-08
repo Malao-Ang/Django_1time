@@ -27,6 +27,9 @@ class Product(models.Model):
     cost = models.DecimalField(max_digits = 10,decimal_places=2,null=True,blank=True)
     quantity = models.IntegerField(default=1,null=True,blank=True)
     instock = models.BooleanField(default= True)
+    #file
+    picture = models.ImageField(upload_to = 'product',null = True,blank=True)
+    specfile = models.FileField(upload_to = 'specfile',null = True,blank=True)
 
     def __str__(self):
         return self.title

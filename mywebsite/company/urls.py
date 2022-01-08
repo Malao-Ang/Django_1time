@@ -12,4 +12,5 @@ urlpatterns = [
     path('verify-email/<str:token>/', Verify_Success,name = 'verify-email'), #www.W.computer/verify-email
     path('my-team/', MyTeam,name = 'my-team'), #www.W.computer/my-team
     path('action-detail/<int:cid>/',ActionPage,name = 'action-page'), #www.W.computer/action-detail
+    path('add-product/',AddProduct,name = 'add-product'), #www.W.computer/add-product
 ]
