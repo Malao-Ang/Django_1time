@@ -22,7 +22,7 @@
         {% for ct in contact %}
         <tr>
             <th scope="row">{{forloop.counter}}</th>
-            <td>{{ct.title}}</td>
+            <td><a href="{% url 'action-page' ct.id %}">{{ct.title}}</a></td>
             <td>{{ct.email}}</td>
             <td>{{ct.detail}}</td>
             {% if ct.complete == True %}

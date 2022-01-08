@@ -50,3 +50,11 @@ class ResetPasswordToken(models.Model):
     token = models.CharField(max_length=100)
     def __int__(self):
         return self.user.username
+
+class Action(models.Model):
+    contactlist = models.ForeignKey(ContactList,on_delete = models.CASCADE)
+    actiondetail = models.TextField() #ไม่ใส่ null = True,blank=True คือให้บังคับกรอก
+
+    def __str__(self):
+        return "{} | title : {}".format(self.contactlist.email,self.contactlist.title)
+

@@ -1,0 +1,43 @@
+    {% extends 'company/base.html'%}
+    {% block title %} My Teame {% endblock title %}
+    {%block content %}
+
+    <center>
+        <h1>My Team</h1>
+    </center><br><br>
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+            <div class="col-md-4">
+                <img src="https://scontent.fbkk2-7.fna.fbcdn.net/v/t39.30808-6/262352769_1619147851761662_438947194953892723_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeHYo_SjHvypus2kqukW_LpV-0_ocW93WlX7T-hxb3daVXTKM1vPys-MfSEwf11rz4tWyBSW5SI9YFawxKcueqWX&_nc_ohc=EteJnog1t3sAX-_ZHgA&_nc_ht=scontent.fbkk2-7.fna&oh=00_AT8GXXtAy0FIntjCKbXmhJ5KtSOFP59Tdp324Ygb98r8DQ&oe=61DCEDD9" 
+                class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">Developer</h5>
+                <p class="card-text">สวัสดีค่ะ ชื่อเล่น พิมพ์ นี่คือ website ที่พิมพ์สร้าง โดยใช้ Django ในการพัฒนามีข้อติชมหรือแก้ไขเพิ่มเติมสามารถส่งมาหาเราได้เสมอ !!!</p>
+                    <a class="nav-link" href="{% url 'contact-page' %}">Link Contact Us!!!!</a>
+                
+                </div>
+            </div>
+            </div>
+        </div><br><br>
+
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+            <div class="col-md-4">
+                <img src="https://i.pinimg.com/originals/e5/bd/8e/e5bd8ea71d20c8cea5505390ebab7406.jpg" 
+                class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">....</h5>
+                <p class="card-text">.....</p>
+                <p class="card-text">.....</p>
+                <p class="card-text" align="right">ขอขอบพระคุณเป็นอย่างสูง</p>
+                
+                </div>
+            </div>
+            </div>
+        </div>
+
+    {% endblock content %}

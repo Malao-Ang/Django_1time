@@ -217,4 +217,48 @@ def ResetNewPassword(request,token):
     # except:
     #         context['error'] = "Your request code doesn't exist in the system, please check."
 
-    
+def MyTeam (request):
+    context= {}
+    return render(request, 'company/team.html')
+
+def ActionPage(request,cid):
+    context = {}
+    #cid = ContactList ID
+    contact = ContactList.objects.get(id=cid)
+    context['contact'] = contact
+    try:
+        action = Action.objects.get(contactlist = contact)
+        context['action'] = action
+    except:
+        pass
+
+    if request.method == 'POST': #if กดปุ่มเข้ามา
+            data = request.POST.copy()
+            detail =  data.get('detail')
+            print(data)
+
+            if 'save' in data:
+                print('save data')
+                try:
+                    check = Action.objects.get(contactlist = contact)
+                    check.actiondetail = detail
+                    check.save()
+                except:
+                    new  = Action()
+                    new.contactlist = contact
+                    new.actiondetail = detail
+                    new.save()
+
+            elif 'delete' in data:
+                print('Delete data')
+                try:
+                    check = Action.objects.get(contactlist  = contact)
+                    check.delete()
+                except:
+                    pass
+            elif 'complete' in data:
+                print('mark complete')
+                contact.complete = True
+                contact.save()
+
+    return render(request, 'company/action.html',context)

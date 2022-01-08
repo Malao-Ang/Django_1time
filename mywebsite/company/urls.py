@@ -10,4 +10,6 @@ urlpatterns = [
     path('reset-password/', ResetPassword,name = 'reset-password'), #www.W.computer/resetpassword
     path('reset-new-password/<str:token>/', ResetNewPassword,name = 'reset-new-password'), #www.W.computer/reset-new-password
     path('verify-email/<str:token>/', Verify_Success,name = 'verify-email'), #www.W.computer/verify-email
+    path('my-team/', MyTeam,name = 'my-team'), #www.W.computer/my-team
+    path('action-detail/<int:cid>/',ActionPage,name = 'action-page'), #www.W.computer/action-detail
 ]

@@ -68,13 +68,13 @@
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         {% if user.profile.usertype == "accountant"%}
-          <a class = "py-2 text-dark text-decoration-none" href="{% url 'accountant-page' %}">รายชื่อติดต่อ</a>
+          <a class = "py-2 text-dark text-decoration-none" href="{% url 'accountant-page' %}">รายชื่อติดต่อ </a>
 
         {% else %}
-          <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'about-page' %}">เกี่ยวกับเรา</a>
-          <a class="me-3 py-2 text-dark text-decoration-none" href="#">บริการ</a>
-          <a class="me-3 py-2 text-dark text-decoration-none" href="#">ซื้อสินค้า</a>
-          <a class="py-2 text-dark text-decoration-none" href="{% url 'contact-page' %}">ติดต่อเรา</a>
+          <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'about-page' %}">เกี่ยวกับเรา &#128587;</a>
+          <a class="me-3 py-2 text-dark text-decoration-none" href="#">บริการ &#128188;</a>
+          <a class="me-3 py-2 text-dark text-decoration-none" href="#">ซื้อสินค้า &#128182;</a>
+          <a class="py-2 text-dark text-decoration-none" href="{% url 'contact-page' %}">ติดต่อเรา &#128140;</a>
         {%  endif %}
         
         {% if user.is_authenticated %}
@@ -126,7 +126,7 @@
       <div class="col-6 col-md">
         <h5>About</h5>
         <ul class="list-unstyled text-small">
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="{% url 'my-team' %}">Team</a></li>
           <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
           <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
           <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
