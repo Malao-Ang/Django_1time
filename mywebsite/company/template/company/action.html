@@ -1,12 +1,17 @@
 {% extends 'company/base.html'%}
-{% block title %} About As {% endblock title %}
+{% block title %} Action {% endblock title %}
 {%block content %}
-<h1>About Us</h1>
 <center>
     <h1>รายละเอียด</h1>
 </center>
 <div class="container">
-    <h3>หัวข้อ : {{contact.title}}</h3><br>
+    <h3>หัวข้อ : {{contact.title}}
+    {% if contact.complete == True %}
+        &nbsp;<i class="fa fa-check-circle" style="font-size:20px;color:green"></i>
+    {% else %}
+        &nbsp;<i class="fa fa-times-circle" style="font-size:20px;color:rgb(179, 55, 24)"></i>
+    {% endif %}
+</h3>
     <p>
         Email : {{contact.email}}<br>
         รายละเอียด: {{contact.detail}}<br>
@@ -17,9 +22,7 @@
         {% csrf_token %}
             <div class="form-group">
             <label for="detail">ดำเนินการโดย : </label>
-            <textarea type="text" class="form-control" rows="5"  id="detail" name="detail">
-                {{action.actiondetail}}
-            </textarea>
+            <textarea type="text" class="form-control" rows="5"  id="detail" name="detail">{{action.actiondetail}}</textarea>
             </div><br><br>
             
 

@@ -243,22 +243,27 @@ def ActionPage(request,cid):
                     check = Action.objects.get(contactlist = contact)
                     check.actiondetail = detail
                     check.save()
+                    context['action'] = check
                 except:
                     new  = Action()
                     new.contactlist = contact
                     new.actiondetail = detail
                     new.save()
+                    context['action'] = new
 
             elif 'delete' in data:
                 print('Delete data')
                 try:
                     check = Action.objects.get(contactlist  = contact)
                     check.delete()
+                    contact.delete()
+                    return redirect('accountant-page')
                 except:
                     pass
             elif 'complete' in data:
                 print('mark complete')
                 contact.complete = True
                 contact.save()
+                return redirect('accountant-page')
 
     return render(request, 'company/action.html',context)
