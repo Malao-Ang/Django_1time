@@ -31,5 +31,7 @@ urlpatterns = [
     path('logout/',views.LogoutView.as_view(template_name='company/logout.html'), name = 'logout'),
 ]
 
+
+
 urlpatterns +=staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

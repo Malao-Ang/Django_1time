@@ -20,8 +20,9 @@ def Login(request):
             user = authenticate(username=username, password=password)
             login(request,user)  
             return redirect('home-page')
-        except:    
-            context['massage'] = 'username or password not correct please try again'
+        except:  
+            context['massage'] ='Password or Emai ไม่ถูกต้องกรุณาลองใหม่'
+            # context['massage'] = 'username or password not correct please try again'
     return render(request, 'company/login.html',context)
 # def Home(request):
 #     return HttpResponse('<h1>Hello World!<h1> <br> <p>by Kaewmanee</p>')
@@ -29,6 +30,19 @@ def Login(request):
 def Home(request):
     allproduct = Product.objects.all() # SELECT * fome product
     context = {'allproduct':allproduct}
+    # แยกแถวละ 3 column 
+    allrow = []
+    row = []
+    for i in enumerate(allproduct):
+        if i % 3 == 0:
+            if i != 0:
+                allrow.append(row)
+            row = []
+            row.append(p)
+        else:
+            row.append(p)
+
+
     return render(request, 'company/home.html',context) #company ที่อยู่ใน template
 
 def Aboutus(request):
