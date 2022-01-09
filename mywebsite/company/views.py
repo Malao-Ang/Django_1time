@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 import uuid
 from django.core.files.storage import FileSystemStorage
+from django.core.paginator import Paginator
 def Login(request):
     context = {}#สิ่งที่จะใส่เข้าไป
 
@@ -28,20 +29,27 @@ def Login(request):
 #     return HttpResponse('<h1>Hello World!<h1> <br> <p>by Kaewmanee</p>')
 
 def Home(request):
-    allproduct = Product.objects.all() # SELECT * fome product
-    context = {'allproduct':allproduct}
-    # แยกแถวละ 3 column 
+    allproduct = Product.objects.all() # SELECT * from product
+    product_per_page = 3
+    paginator = Paginator(allproduct, product_per_page)
+    page = request.GET.get('page') 
+    allproduct = paginator.get_page(page)
+    print('COUNT :',len(allproduct))
+
+
+    context = {'allproduct':allproduct}# แยกแถวละ 3 คอลัม	
     allrow = []
     row = []
-    for i in enumerate(allproduct):
+    for i,p in enumerate(allproduct):		
         if i % 3 == 0:
             if i != 0:
-                allrow.append(row)
+                allrow.append(row) 			#ถ้าไม่ใช่ i=0 จะเพิ่มเข้า allrow
             row = []
             row.append(p)
         else:
             row.append(p)
-
+    allrow.append(row)
+    context['allrow'] = allrow
 
     return render(request, 'company/home.html',context) #company ที่อยู่ใน template
 
